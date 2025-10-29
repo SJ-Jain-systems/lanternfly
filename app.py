@@ -5,16 +5,10 @@ from azure.storage.blob import BlobServiceClient, ContentSettings
 
 # Config (prefer connection string locally; App Service can use URL + managed identity if you want later)
 CONN_STR        = os.getenv("AZURE_STORAGE_CONNECTION_STRING")
-STORAGE_URL     = os.getenv("STORAGE_ACCOUNT_URL", "https://yex8wbsystems.blob.core.windows.net")
 IMAGES_CONTAINER= os.getenv("IMAGES_CONTAINER", "lanternfly-images")
 
 # For simplicity: use connection string if present, else fall back to account URL + default creds (not shown)
-if CONN_STR:
-    bsc = BlobServiceClient.from_connection_string(CONN_STR)
-else:
-    from azure.identity import DefaultAzureCredential
-    bsc = BlobServiceClient(account_url=STORAGE_URL, credential=DefaultAzureCredential())
-
+bsc = BlobServiceClient.from_connection_string(CONN_STR)
 cc  = bsc.get_container_client(IMAGES_CONTAINER)
 try:
     cc.create_container()
