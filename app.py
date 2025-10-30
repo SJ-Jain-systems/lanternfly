@@ -52,11 +52,11 @@ def gallery():
 
 @app.get("/api/v1/health")
 def health():
-    return "ok", 200
+    return jsonify({"status": "healthy"})
 
 @app.get("/")
 def index():
-    return jsonify(ok=True, container=cc.container_name)
+    return render_template("index.html")
 
 if __name__ == "__main__":
     app.run(port=5000, debug=True)
