@@ -56,8 +56,7 @@ def health():
 
 @app.get("/")
 def index():
-    return render_template("index.html")
-
+    return jsonify(ok=True, container=cc.container_name)
 
 if __name__ == "__main__":
     app.run(port=5000, debug=True)
